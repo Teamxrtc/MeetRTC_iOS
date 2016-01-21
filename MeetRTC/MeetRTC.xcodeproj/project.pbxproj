@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		517CE3591C0C4D93000B433D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 517CE3581C0C4D93000B433D /* main.m */; };
+		517CE35C1C0C4D93000B433D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 517CE35B1C0C4D93000B433D /* AppDelegate.m */; };
+		517CE3621C0C4D93000B433D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 517CE3601C0C4D93000B433D /* Main.storyboard */; };
+		517CE3651C0C4D93000B433D /* MeetRTC.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 517CE3631C0C4D93000B433D /* MeetRTC.xcdatamodeld */; };
+		517CE3671C0C4D93000B433D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 517CE3661C0C4D93000B433D /* Assets.xcassets */; };
+		517CE36A1C0C4D93000B433D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 517CE3681C0C4D93000B433D /* LaunchScreen.storyboard */; };
+		517CE3761C0C55F1000B433D /* MRTCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517CE3751C0C55F1000B433D /* MRTCViewController.m */; };
+		517CE3791C0C5618000B433D /* MRTCVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 517CE3781C0C5618000B433D /* MRTCVideoViewController.m */; };
+		5181AEB01C0D878800361AE4 /* include in Resources */ = {isa = PBXBuildFile; fileRef = 5181AEA81C0D878800361AE4 /* include */; };
+		5181AEB21C0D878800361AE4 /* XMPPCapabilities.mom in Resources */ = {isa = PBXBuildFile; fileRef = 5181AEAA1C0D878800361AE4 /* XMPPCapabilities.mom */; };
+		5181AEB31C0D878800361AE4 /* XMPPMessageArchiving.momd in Resources */ = {isa = PBXBuildFile; fileRef = 5181AEAB1C0D878800361AE4 /* XMPPMessageArchiving.momd */; };
+		5181AEB41C0D878800361AE4 /* XMPPRoom.momd in Resources */ = {isa = PBXBuildFile; fileRef = 5181AEAC1C0D878800361AE4 /* XMPPRoom.momd */; };
+		5181AEB51C0D878800361AE4 /* XMPPRoomHybrid.momd in Resources */ = {isa = PBXBuildFile; fileRef = 5181AEAD1C0D878800361AE4 /* XMPPRoomHybrid.momd */; };
+		5181AEB61C0D878800361AE4 /* XMPPRoster.mom in Resources */ = {isa = PBXBuildFile; fileRef = 5181AEAE1C0D878800361AE4 /* XMPPRoster.mom */; };
+		5181AEB71C0D878800361AE4 /* XMPPvCard.momd in Resources */ = {isa = PBXBuildFile; fileRef = 5181AEAF1C0D878800361AE4 /* XMPPvCard.momd */; };
+		5181AEEB1C0D8E7700361AE4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEEA1C0D8E7700361AE4 /* libsqlite3.tbd */; };
+		5181AEED1C0D8E8400361AE4 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEEC1C0D8E8400361AE4 /* libicucore.tbd */; };
+		5181AEF11C0D8E9700361AE4 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEF01C0D8E9700361AE4 /* libresolv.tbd */; };
+		5181AEF31C0D8EDB00361AE4 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEF21C0D8EDB00361AE4 /* libc++.tbd */; };
+		5181AEF51C0D8EE500361AE4 /* libstdc++.6.0.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEF41C0D8EE500361AE4 /* libstdc++.6.0.9.tbd */; };
+		5181AEF71C0D8F0800361AE4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEF61C0D8F0800361AE4 /* CoreMedia.framework */; };
+		5181AEF91C0D8F1700361AE4 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEF81C0D8F1700361AE4 /* SystemConfiguration.framework */; };
+		5181AEFB1C0D8F2400361AE4 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEFA1C0D8F2400361AE4 /* CoreAudio.framework */; };
+		5181AEFD1C0D8F2D00361AE4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEFC1C0D8F2D00361AE4 /* AVFoundation.framework */; };
+		5181AEFF1C0D8F3200361AE4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AEFE1C0D8F3200361AE4 /* AudioToolbox.framework */; };
+		5181AF011C0D8F3800361AE4 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AF001C0D8F3800361AE4 /* CFNetwork.framework */; };
+		5181AF031C0D8F4700361AE4 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AF021C0D8F4700361AE4 /* GLKit.framework */; };
+		5181AF051C0D8F5200361AE4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AF041C0D8F5200361AE4 /* Foundation.framework */; };
+		5181AF071C0D8F5A00361AE4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5181AF061C0D8F5A00361AE4 /* UIKit.framework */; };
+		518CDB931C4CE9D400407EDE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 518CDB921C4CE9D400407EDE /* VideoToolbox.framework */; };
+		51AA097C1C157C1400F66048 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 51AA097A1C157C1400F66048 /* SettingsViewController.m */; };
+		51AA097D1C157C1400F66048 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 51AA097B1C157C1400F66048 /* SettingsViewController.xib */; };
+		51DEB7681C1017D800692BB3 /* libMeetRTCSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DEB7671C1017D800692BB3 /* libMeetRTCSDK.a */; };
+		51DEB76A1C10182500692BB3 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51DEB7691C10182500692BB3 /* MobileCoreServices.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		517CE3541C0C4D93000B433D /* MeetRTC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeetRTC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		517CE3581C0C4D93000B433D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		517CE35A1C0C4D93000B433D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		517CE35B1C0C4D93000B433D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		517CE3611C0C4D93000B433D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		517CE3641C0C4D93000B433D /* MeetRTC.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MeetRTC.xcdatamodel; sourceTree = "<group>"; };
+		517CE3661C0C4D93000B433D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		517CE3691C0C4D93000B433D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		517CE36B1C0C4D93000B433D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		517CE3741C0C55F1000B433D /* MRTCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTCViewController.h; sourceTree = "<group>"; };
+		517CE3751C0C55F1000B433D /* MRTCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTCViewController.m; sourceTree = "<group>"; };
+		517CE3771C0C5618000B433D /* MRTCVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MRTCVideoViewController.h; sourceTree = "<group>"; };
+		517CE3781C0C5618000B433D /* MRTCVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MRTCVideoViewController.m; sourceTree = "<group>"; };
+		5181AEA81C0D878800361AE4 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; name = include; path = libs/include; sourceTree = "<group>"; };
+		5181AEAA1C0D878800361AE4 /* XMPPCapabilities.mom */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = XMPPCapabilities.mom; path = libs/XMPPCapabilities.mom; sourceTree = "<group>"; };
+		5181AEAB1C0D878800361AE4 /* XMPPMessageArchiving.momd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XMPPMessageArchiving.momd; path = libs/XMPPMessageArchiving.momd; sourceTree = "<group>"; };
+		5181AEAC1C0D878800361AE4 /* XMPPRoom.momd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XMPPRoom.momd; path = libs/XMPPRoom.momd; sourceTree = "<group>"; };
+		5181AEAD1C0D878800361AE4 /* XMPPRoomHybrid.momd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XMPPRoomHybrid.momd; path = libs/XMPPRoomHybrid.momd; sourceTree = "<group>"; };
+		5181AEAE1C0D878800361AE4 /* XMPPRoster.mom */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = XMPPRoster.mom; path = libs/XMPPRoster.mom; sourceTree = "<group>"; };
+		5181AEAF1C0D878800361AE4 /* XMPPvCard.momd */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XMPPvCard.momd; path = libs/XMPPvCard.momd; sourceTree = "<group>"; };
+		5181AEEA1C0D8E7700361AE4 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		5181AEEC1C0D8E8400361AE4 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		5181AEEE1C0D8E8C00361AE4 /* libresolv.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.9.tbd; path = usr/lib/libresolv.9.tbd; sourceTree = SDKROOT; };
+		5181AEF01C0D8E9700361AE4 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
+		5181AEF21C0D8EDB00361AE4 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		5181AEF41C0D8EE500361AE4 /* libstdc++.6.0.9.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.0.9.tbd"; path = "usr/lib/libstdc++.6.0.9.tbd"; sourceTree = SDKROOT; };
+		5181AEF61C0D8F0800361AE4 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		5181AEF81C0D8F1700361AE4 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5181AEFA1C0D8F2400361AE4 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		5181AEFC1C0D8F2D00361AE4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5181AEFE1C0D8F3200361AE4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5181AF001C0D8F3800361AE4 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		5181AF021C0D8F4700361AE4 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		5181AF041C0D8F5200361AE4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5181AF061C0D8F5A00361AE4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		518CDB921C4CE9D400407EDE /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		51AA09791C157C1400F66048 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		51AA097A1C157C1400F66048 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		51AA097B1C157C1400F66048 /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		51DEB7671C1017D800692BB3 /* libMeetRTCSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMeetRTCSDK.a; path = libs/libMeetRTCSDK.a; sourceTree = "<group>"; };
+		51DEB7691C10182500692BB3 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		517CE3511C0C4D93000B433D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				518CDB931C4CE9D400407EDE /* VideoToolbox.framework in Frameworks */,
+				51DEB76A1C10182500692BB3 /* MobileCoreServices.framework in Frameworks */,
+				5181AF071C0D8F5A00361AE4 /* UIKit.framework in Frameworks */,
+				5181AF051C0D8F5200361AE4 /* Foundation.framework in Frameworks */,
+				5181AF031C0D8F4700361AE4 /* GLKit.framework in Frameworks */,
+				5181AF011C0D8F3800361AE4 /* CFNetwork.framework in Frameworks */,
+				5181AEFF1C0D8F3200361AE4 /* AudioToolbox.framework in Frameworks */,
+				51DEB7681C1017D800692BB3 /* libMeetRTCSDK.a in Frameworks */,
+				5181AEFD1C0D8F2D00361AE4 /* AVFoundation.framework in Frameworks */,
+				5181AEFB1C0D8F2400361AE4 /* CoreAudio.framework in Frameworks */,
+				5181AEF91C0D8F1700361AE4 /* SystemConfiguration.framework in Frameworks */,
+				5181AEF71C0D8F0800361AE4 /* CoreMedia.framework in Frameworks */,
+				5181AEF51C0D8EE500361AE4 /* libstdc++.6.0.9.tbd in Frameworks */,
+				5181AEF31C0D8EDB00361AE4 /* libc++.tbd in Frameworks */,
+				5181AEF11C0D8E9700361AE4 /* libresolv.tbd in Frameworks */,
+				5181AEED1C0D8E8400361AE4 /* libicucore.tbd in Frameworks */,
+				5181AEEB1C0D8E7700361AE4 /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		517CE34B1C0C4D93000B433D = {
+			isa = PBXGroup;
+			children = (
+				518CDB921C4CE9D400407EDE /* VideoToolbox.framework */,
+				51DEB7691C10182500692BB3 /* MobileCoreServices.framework */,
+				5181AF061C0D8F5A00361AE4 /* UIKit.framework */,
+				5181AF041C0D8F5200361AE4 /* Foundation.framework */,
+				5181AF021C0D8F4700361AE4 /* GLKit.framework */,
+				5181AF001C0D8F3800361AE4 /* CFNetwork.framework */,
+				5181AEFE1C0D8F3200361AE4 /* AudioToolbox.framework */,
+				5181AEFC1C0D8F2D00361AE4 /* AVFoundation.framework */,
+				5181AEFA1C0D8F2400361AE4 /* CoreAudio.framework */,
+				5181AEF81C0D8F1700361AE4 /* SystemConfiguration.framework */,
+				5181AEF61C0D8F0800361AE4 /* CoreMedia.framework */,
+				5181AEF41C0D8EE500361AE4 /* libstdc++.6.0.9.tbd */,
+				5181AEF21C0D8EDB00361AE4 /* libc++.tbd */,
+				5181AEF01C0D8E9700361AE4 /* libresolv.tbd */,
+				5181AEEE1C0D8E8C00361AE4 /* libresolv.9.tbd */,
+				5181AEEC1C0D8E8400361AE4 /* libicucore.tbd */,
+				5181AEEA1C0D8E7700361AE4 /* libsqlite3.tbd */,
+				5181AEA71C0D877A00361AE4 /* libs */,
+				517CE3561C0C4D93000B433D /* MeetRTC */,
+				517CE3551C0C4D93000B433D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		517CE3551C0C4D93000B433D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				517CE3541C0C4D93000B433D /* MeetRTC.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		517CE3561C0C4D93000B433D /* MeetRTC */ = {
+			isa = PBXGroup;
+			children = (
+				517CE35A1C0C4D93000B433D /* AppDelegate.h */,
+				517CE35B1C0C4D93000B433D /* AppDelegate.m */,
+				517CE3741C0C55F1000B433D /* MRTCViewController.h */,
+				517CE3751C0C55F1000B433D /* MRTCViewController.m */,
+				517CE3771C0C5618000B433D /* MRTCVideoViewController.h */,
+				517CE3781C0C5618000B433D /* MRTCVideoViewController.m */,
+				517CE3601C0C4D93000B433D /* Main.storyboard */,
+				51AA09791C157C1400F66048 /* SettingsViewController.h */,
+				51AA097A1C157C1400F66048 /* SettingsViewController.m */,
+				51AA097B1C157C1400F66048 /* SettingsViewController.xib */,
+				517CE3661C0C4D93000B433D /* Assets.xcassets */,
+				517CE3681C0C4D93000B433D /* LaunchScreen.storyboard */,
+				517CE36B1C0C4D93000B433D /* Info.plist */,
+				517CE3631C0C4D93000B433D /* MeetRTC.xcdatamodeld */,
+				517CE3571C0C4D93000B433D /* Supporting Files */,
+			);
+			path = MeetRTC;
+			sourceTree = "<group>";
+		};
+		517CE3571C0C4D93000B433D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				517CE3581C0C4D93000B433D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5181AEA71C0D877A00361AE4 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				51DEB7671C1017D800692BB3 /* libMeetRTCSDK.a */,
+				5181AEA81C0D878800361AE4 /* include */,
+				5181AEAA1C0D878800361AE4 /* XMPPCapabilities.mom */,
+				5181AEAB1C0D878800361AE4 /* XMPPMessageArchiving.momd */,
+				5181AEAC1C0D878800361AE4 /* XMPPRoom.momd */,
+				5181AEAD1C0D878800361AE4 /* XMPPRoomHybrid.momd */,
+				5181AEAE1C0D878800361AE4 /* XMPPRoster.mom */,
+				5181AEAF1C0D878800361AE4 /* XMPPvCard.momd */,
+			);
+			name = libs;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		517CE3531C0C4D93000B433D /* MeetRTC */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 517CE36E1C0C4D93000B433D /* Build configuration list for PBXNativeTarget "MeetRTC" */;
+			buildPhases = (
+				517CE3501C0C4D93000B433D /* Sources */,
+				517CE3511C0C4D93000B433D /* Frameworks */,
+				517CE3521C0C4D93000B433D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MeetRTC;
+			productName = MeetRTC;
+			productReference = 517CE3541C0C4D93000B433D /* MeetRTC.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		517CE34C1C0C4D93000B433D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = com.comcast;
+				TargetAttributes = {
+					517CE3531C0C4D93000B433D = {
+						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = PBB4TH8ML5;
+					};
+				};
+			};
+			buildConfigurationList = 517CE34F1C0C4D93000B433D /* Build configuration list for PBXProject "MeetRTC" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 517CE34B1C0C4D93000B433D;
+			productRefGroup = 517CE3551C0C4D93000B433D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				517CE3531C0C4D93000B433D /* MeetRTC */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		517CE3521C0C4D93000B433D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5181AEB51C0D878800361AE4 /* XMPPRoomHybrid.momd in Resources */,
+				517CE36A1C0C4D93000B433D /* LaunchScreen.storyboard in Resources */,
+				5181AEB31C0D878800361AE4 /* XMPPMessageArchiving.momd in Resources */,
+				5181AEB41C0D878800361AE4 /* XMPPRoom.momd in Resources */,
+				517CE3671C0C4D93000B433D /* Assets.xcassets in Resources */,
+				517CE3621C0C4D93000B433D /* Main.storyboard in Resources */,
+				51AA097D1C157C1400F66048 /* SettingsViewController.xib in Resources */,
+				5181AEB01C0D878800361AE4 /* include in Resources */,
+				5181AEB71C0D878800361AE4 /* XMPPvCard.momd in Resources */,
+				5181AEB21C0D878800361AE4 /* XMPPCapabilities.mom in Resources */,
+				5181AEB61C0D878800361AE4 /* XMPPRoster.mom in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		517CE3501C0C4D93000B433D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				517CE3761C0C55F1000B433D /* MRTCViewController.m in Sources */,
+				517CE3651C0C4D93000B433D /* MeetRTC.xcdatamodeld in Sources */,
+				517CE35C1C0C4D93000B433D /* AppDelegate.m in Sources */,
+				51AA097C1C157C1400F66048 /* SettingsViewController.m in Sources */,
+				517CE3591C0C4D93000B433D /* main.m in Sources */,
+				517CE3791C0C5618000B433D /* MRTCVideoViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		517CE3601C0C4D93000B433D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				517CE3611C0C4D93000B433D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		517CE3681C0C4D93000B433D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				517CE3691C0C4D93000B433D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		517CE36C1C0C4D93000B433D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		517CE36D1C0C4D93000B433D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		517CE36F1C0C4D93000B433D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/libs/include/MeetRTCSDK",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = MeetRTC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MeetRTC",
+					"$(PROJECT_DIR)/libs",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lxml2",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Comcast.xfinityVideoShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		517CE3701C0C4D93000B433D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/libs/include/MeetRTCSDK",
+					"$(SDKROOT)/usr/include/libxml2",
+				);
+				INFOPLIST_FILE = MeetRTC/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MeetRTC",
+					"$(PROJECT_DIR)/libs",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lxml2",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = Comcast.xfinityVideoShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		517CE34F1C0C4D93000B433D /* Build configuration list for PBXProject "MeetRTC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				517CE36C1C0C4D93000B433D /* Debug */,
+				517CE36D1C0C4D93000B433D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		517CE36E1C0C4D93000B433D /* Build configuration list for PBXNativeTarget "MeetRTC" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				517CE36F1C0C4D93000B433D /* Debug */,
+				517CE3701C0C4D93000B433D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		517CE3631C0C4D93000B433D /* MeetRTC.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				517CE3641C0C4D93000B433D /* MeetRTC.xcdatamodel */,
+			);
+			currentVersion = 517CE3641C0C4D93000B433D /* MeetRTC.xcdatamodel */;
+			path = MeetRTC.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 517CE34C1C0C4D93000B433D /* Project object */;
+}
