@@ -534,7 +534,7 @@ static __strong NSData *CRLFCRLF;
 
     
     // Manish - Check if we have a cookie for this server
-    NSLog(@"Manish Check if we have a cookie for this server");
+    NSLog(@"Check if we have a cookie for this server");
 
     // Manish - Adding cookie support
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];

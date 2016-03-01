@@ -6,8 +6,8 @@
 //  Copyright 2014 Comcast Cable Communications Management, LLC.
 //
 
-#ifndef xfinity_webrtc_sdk_XMPPRayo_h
-#define xfinity_webrtc_sdk_XMPPRayo_h
+#ifndef meet_webrtc_sdk_XMPPRayo_h
+#define meet_webrtc_sdk_XMPPRayo_h
 
 #import <Foundation/Foundation.h>
 

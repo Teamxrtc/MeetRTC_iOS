@@ -6,8 +6,8 @@
 //  Copyright 2014 Comcast Cable Communications Management, LLC.
 //
 
-#ifndef xfinity_webrtc_sdk_XMPPJingleSDP_h
-#define xfinity_webrtc_sdk_XMPPJingleSDP_h
+#ifndef meet_webrtc_sdk_XMPPJingleSDP_h
+#define meet_webrtc_sdk_XMPPJingleSDP_h
 #import <Foundation/Foundation.h>
 #import "XMPP.h"
 #import "XMPPFramework.h"

@@ -383,8 +383,6 @@ static unsigned int numProcessors;
     
 #if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
     
-    // Issue #6 (GoogleCode) - Crashes on iOS 4.2.1 and iPhone 4
-    // 
     // Crash caused by class_getClassMethod(2).
     // 
     //     "It's a bug with UIAccessibilitySafeCategory__NSObject so it didn't pop up until
@@ -427,9 +425,7 @@ static unsigned int numProcessors;
     return result;
     
 #else
-    
-    // Issue #24 (GitHub) - Crashing in in ARC+Simulator
-    // 
+     
     // The method +[DDLog isRegisteredClass] will crash a project when using it with ARC + Simulator.
     // For running in the Simulator, it needs to execute the non-iOS code.
     

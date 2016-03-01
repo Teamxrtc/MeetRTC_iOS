@@ -36,7 +36,4 @@
 - (void)peerConnection:(RTCPeerConnection*)peerConnection
            didGetStats:(NSArray*)stats;  // NSArray of RTCStatsReport*.
 
-- (void)peerConnection:(RTCPeerConnection*)peerConnection
-           sendSuspendVideo:(BOOL)suspend_;
-
 @end

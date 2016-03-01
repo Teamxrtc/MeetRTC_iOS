@@ -349,7 +349,6 @@
         }
     }
     
-    NSLog(@"ContentString is %@", contentString);
     
     return contentString;
 }
@@ -615,7 +614,9 @@
     [jingleElement addAttributeWithName:@"xmlns" stringValue:@"urn:xmpp:jingle:1"];
     [jingleElement addAttributeWithName:@"sid" stringValue:SID];
     [jingleElement addAttributeWithName:@"action" stringValue:action];
-    [jingleElement addAttributeWithName:@"initiator" stringValue:[initiator full]];
+    //fix for Issue #2 - teamxrtc
+    [jingleElement addAttributeWithName:@"initiator" stringValue:[target full]];
+    [jingleElement addAttributeWithName:@"responder" stringValue:[initiator full]];
     
     // Add group
     NSArray *groups = [dict objectForKey:@"groups"];
@@ -647,7 +648,16 @@
     for (int i=0; i < [contents count]; i++)
     {
         NSDictionary *content = [contents objectAtIndex:i];
-        NSString* creator = [content objectForKey:@"creator"];
+        
+        //fix for Issue #2 - teamxrtc
+        NSString *creator=[content objectForKey:@"creator"];
+        NSString *sender=[content objectForKey:@"senders"];
+        
+        if ([[content objectForKey:@"creator"] isEqualToString:@"initiator"])
+        {
+            creator = @"responder";
+        }
+        
         NSString* media_name = [content objectForKey:@"name"];
         
         NSDictionary* description = [content objectForKey:@"description"];
@@ -656,6 +666,8 @@
         //Content
         NSXMLElement *contentElement = [NSXMLElement elementWithName:@"content"];
         [contentElement addAttributeWithName:@"creator" stringValue:creator];
+         //fix for Issue #2 - teamxrtc
+        [contentElement addAttributeWithName:@"senders" stringValue:sender];
         [contentElement addAttributeWithName:@"name" stringValue:media_name];
         
         //Bundle
@@ -931,8 +943,6 @@
     return xmpp;
 }
 
-
-
 - (XMPPIQ *)CandidateToXMPP:(NSDictionary *)dict action:(NSString *)action initiator:(XMPPJID *)initiator target:(XMPPJID *)target UID:(NSString *)UID SID:(NSString *)SID
 {
     
@@ -946,14 +956,16 @@
     [jingleElement addAttributeWithName:@"xmlns" stringValue:@"urn:xmpp:jingle:1"];
     [jingleElement addAttributeWithName:@"sid" stringValue:SID];
     [jingleElement addAttributeWithName:@"action" stringValue:action];
-    [jingleElement addAttributeWithName:@"initiator" stringValue:[initiator full]];
+    
+    //fix for Issue #2 - teamxrtc
+    [jingleElement addAttributeWithName:@"initiator" stringValue:[target full]];
     
     // id
     NSString *id = [dict objectForKey:@"id"];
     if ( (id != nil) && ([id length] > 0))
     {
         NSXMLElement *contentElement = [NSXMLElement elementWithName:@"content"];
-        [contentElement addAttributeWithName:@"creator" stringValue:@"initiator"];
+        [contentElement addAttributeWithName:@"creator" stringValue:@"responder"];
         [contentElement addAttributeWithName:@"name" stringValue:id];
         
         NSXMLElement *transElement = [NSXMLElement elementWithName:@"transport"];
@@ -1079,9 +1091,6 @@
     session = [media objectAtIndex:0];
     
     [media removeObject:[media objectAtIndex:0]];
-    
-    NSLog(@"Media%@", media);
-    NSLog(@"Session%@", session);
     
 }
 

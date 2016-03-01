@@ -264,11 +264,11 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
 	// If you don't specify a hostPort, then the default (5222) will be used.
 	
     //	[xmppStream setHostName:@"talk.google.com"];
-    //	[xmppStream setHostPort:5222];
+    //	[xmppStream setHostPort:xxxx];
     
     //Vamsi
-    //[xmppStream setHostName:@"10.0.0.22"];
-    //[xmppStream setHostPort:80];
+    //[xmppStream setHostName:@"x.x.x.x"];
+    //[xmppStream setHostPort:xxxx];
     
     // You may need to alter these settings depending on the server you're connecting to
     customCertEvaluation = YES;
@@ -833,8 +833,8 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     NSXMLElement *ccElement = [NSXMLElement elementWithName:@"property"];
     [ccElement addAttributeWithName:@"name" stringValue:@"call_control"];
     NSString *dom = [xmppStream.myJID domain];
-    NSString *cc = [dom stringByReplacingOccurrencesOfString:@"xmpp" withString:@"callcontrol"];
-    [ccElement addAttributeWithName:@"value" stringValue:cc];
+    dom=[NSString stringWithFormat:@"callcontrol.%@",dom];
+    [ccElement addAttributeWithName:@"value" stringValue:dom];
     [confElement addChild:ccElement];
     
     NSXMLElement *chanElement = [NSXMLElement elementWithName:@"property"];
@@ -867,20 +867,9 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
     [confElement addChild:firefoxElement];
     
-    // New DNS related changes
-    
-    //NSMutableString *fullTargetJid = [[NSMutableString alloc]init];
-    //[fullTargetJid appendString:@"focus."];
-    //[fullTargetJid appendString:[xmppStream.myJID domain]];
-    
     NSString *fullTargetJid = [xmppStream.myJID domain];
-    //***arunkavi
-//    NSLog(@"%@",fullRoomName);
-//    NSArray *tempArray=[fullTargetJid componentsSeparatedByString:@"@"];
-//    NSString *tempRoomName=[tempArray objectAtIndex:0];
-//    NSString *tempServer=[tempArray objectAtIndex:1];
+
     fullTargetJid=[NSString stringWithFormat:@"focus.%@",fullTargetJid];
-//    fullTargetJid = [fullTargetJid stringByReplacingOccurrencesOfString:@"xmpp" withString:@"focus"];
     
     XMPPJID *targetJid = [XMPPJID jidWithString:fullTargetJid];
     
@@ -942,7 +931,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     
   
     NSString *focusmucjid = [xmppStream.myJID domain];
-    focusmucjid = [focusmucjid stringByReplacingOccurrencesOfString:@"xmpp" withString:@"jirecon"];
+    focusmucjid=[NSString stringWithFormat:@"jirecon.%@",focusmucjid];
     
     XMPPJID *targetJid = [XMPPJID jidWithString:focusmucjid];
     
@@ -967,7 +956,7 @@ static const int ddLogLevel = LOG_LEVEL_INFO;
     [conElement addChild:recElement];
     
     NSString *focusmucjid = target;
-    focusmucjid = [focusmucjid stringByReplacingOccurrencesOfString:@"xmpp" withString:@"colibri"];
+    focusmucjid=[NSString stringWithFormat:@"colibri.%@",focusmucjid];
     
     XMPPJID *targetJid = [XMPPJID jidWithString:focusmucjid];
     

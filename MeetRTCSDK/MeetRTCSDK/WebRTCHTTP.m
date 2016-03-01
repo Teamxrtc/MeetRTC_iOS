@@ -97,9 +97,6 @@ NSString* const TAG1 = @"WebRTCHTTP";
         }
        
         
-        /*
-        {"resource":"/RTCGChannel-1.0/resources","status":200,"hasErrors":false,"iceServers":{"username":"ngcdemo01@comcast.net:1407440169","uris":["turn:96.119.0.165:443?transport=tcp"],"credential":"HpLs/tBvzo6bBgb0/k22zu4gc3I="},"webSocket":{"username":"ngcdemo01@comcast.net:1407437169","uris":["http://162.150.2.108:8081"],"credential":"svF9H12qO5QOVdIy4G57sJ+iEsw="},"messageId":0}
-         */
         NSDictionary* json =[WebRTCJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         NSDictionary* webSockjson =[json objectForKey:@"webSocket"];
         NSDictionary* iceServer =[json objectForKey:@"iceServers"];

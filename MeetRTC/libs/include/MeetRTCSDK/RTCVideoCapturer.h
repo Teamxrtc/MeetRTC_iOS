@@ -32,10 +32,6 @@
 
 // Create a new video capturer using the specified device.
 + (RTCVideoCapturer *)capturerWithDeviceName:(NSString *)deviceName;
-// Create a new video capturer using the specified device.
-+ (BOOL )releaseCapturer:(RTCVideoCapturer *)rtcCapturer;
-//+ (BOOL )releaseCapturer;
-- (void )stop;
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 // Disallow init and don't add to documentation

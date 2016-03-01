@@ -1,6 +1,5 @@
 //
 //  WebRTCFactory.h
-//  XfinityVideoShare
 //
 //  Created by Ganvir, Manish on 5/29/14.
 //  Copyright 2014 Comcast Cable Communications Management, LLC.
