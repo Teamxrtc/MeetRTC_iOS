@@ -3,7 +3,7 @@
 //  h264v1
 //
 //  Created by Ganvir, Manish on 3/31/15.
-//  Copyright 2015 Comcast Cable Communications Management, LLC.
+//  Copyright 2014 Comcast Cable Communications Management, LLC.
 //
 
 #import <Foundation/Foundation.h>
