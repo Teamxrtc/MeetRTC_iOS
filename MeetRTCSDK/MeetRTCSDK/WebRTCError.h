@@ -1,13 +1,12 @@
 //
 //  WebRTCError.h
-//  XfinityVideoShare
 //
 //  Created by Pankaj on 26/06/14.
 //  Copyright 2014 Comcast Cable Communications Management, LLC.
 //
 
-#ifndef XfinityVideoShare_WebRTCError_h
-#define XfinityVideoShare_WebRTCError_h
+#ifndef meet_WebRTCError_h
+#define meet_WebRTCError_h
 
 //Error Domain
 extern NSString* const General;

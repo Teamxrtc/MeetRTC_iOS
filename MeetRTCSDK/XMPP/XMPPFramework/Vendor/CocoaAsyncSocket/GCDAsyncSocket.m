@@ -3340,7 +3340,7 @@ enum GCDAsyncSocketConfig
 
 /**
  * Finds the address of an interface description.
- * An inteface description may be an interface name (en0, en1, lo0) or corresponding IP (192.168.4.34).
+ * An inteface description may be an interface name (en0, en1, lo0) or corresponding IP (192.168.x.x).
  * 
  * The interface description may optionally contain a port number at the end, separated by a colon.
  * If a non-zero port parameter is provided, any port number in the interface description is ignored.

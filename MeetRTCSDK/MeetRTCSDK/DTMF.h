@@ -6,8 +6,8 @@
 //  Copyright 2014 Comcast Cable Communications Management, LLC
 //
 
-#ifndef xfinity_webrtc_sdk_DTMF_h
-#define xfinity_webrtc_sdk_DTMF_h
+#ifndef meet_webrtc_sdk_DTMF_h
+#define meet_webrtc_sdk_DTMF_h
 
 typedef enum{
     NUMBER1 ,
