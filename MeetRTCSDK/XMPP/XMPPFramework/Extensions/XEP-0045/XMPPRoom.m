@@ -1018,7 +1018,6 @@ enum XMPPRoomState
 		{
 			myRoomJID = from;
 			myNickname = [from resource];
-            NSLog(@"room and nick name %@ %@",myRoomJID,myNickname);
 			if (state & kXMPPRoomStateJoining)
 			{
 				state &= ~kXMPPRoomStateJoining;
@@ -1043,12 +1042,10 @@ enum XMPPRoomState
 		if (isAvailable)
 		{
 			[multicastDelegate xmppRoom:self occupantDidJoin:from withPresence:presence];
-            NSLog(@"who joined %@ from %@ ",presence,from);
 		}
 		else if (isUnavailable)
 		{
 			[multicastDelegate xmppRoom:self occupantDidLeave:from withPresence:presence];
-            NSLog(@"who left %@ from %@ ",presence,from);
 		}
 	}
 }

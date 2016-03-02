@@ -111,8 +111,6 @@ NSString* const TAG4 = @"WebRTCSession";
     state = starting;
     webrtcstack = stack;
     
-//    FromCaller = sessionConfig.callerID;
-//    ToCaller = sessionConfig.targetID;
     DisplayName = sessionConfig.displayName;
     localstream = _stream;
     self.delegate = _appdelegate;
@@ -185,8 +183,6 @@ NSString* const TAG4 = @"WebRTCSession";
     state = starting;
     webrtcstack = stack;
     isAnswerSent = false;
-//    FromCaller = [sessionConfig.callerID lowercaseString];
-//    ToCaller = [sessionConfig.targetID lowercaseString];
     DisplayName = sessionConfig.displayName;
     localstream = _stream;
     self.delegate = _appdelegate;
@@ -261,9 +257,7 @@ NSString* const TAG4 = @"WebRTCSession";
 
     state = starting;
     webrtcstack = stack;
-    
-//    FromCaller = sessionConfig.callerID;
-//    ToCaller = sessionConfig.targetID;
+
     DisplayName = sessionConfig.displayName;
     localstream = _stream;
     self.delegate = _appdelegate;
@@ -1435,10 +1429,6 @@ NSString* const TAG4 = @"WebRTCSession";
             }
         conferenceFlag=(int)streamsSession.count;
     }
-        
-    NSLog(@"msidsSession type %@ data %@",type,msidsSession);
-    NSLog(@"streamSession type %@ data %@",type,streamsSession);
-    NSLog(@"conference flag %d",conferenceFlag);
     
 }
 #pragma mark - Sample RTCSessionDescriptonDelegate delegate
@@ -1616,7 +1606,6 @@ didSetSessionDescriptionWithError:(NSError *)error
    
     if ([stream.videoTracks count] > 0)
     {
-        NSLog(@"onAddStream name %@",stream.label);
         //stream changes - arunkavi
         NSDictionary *tempStream=[[NSDictionary alloc]initWithObjectsAndKeys:stream.label,@"name",stream,@"streamInfo", nil];
         if (streamsSession.count==1)
@@ -2715,15 +2704,15 @@ if(sessionConfig.isBWCheckEnable){
     _dataChannel = [peerConnection createDataChannelWithLabel:@"datachannel" config:nil];
     _dataChannel.delegate = self;
     cancelSendData = false;
-    NSLog(@"HarishDataChannel::Inside createDataChannel");
+    NSLog(@"DataChannel::Inside createDataChannel");
 }
 
 -(void)sendDataChannelMessage:(NSData*)imgData
 {
-    NSLog(@"HarishDataChannel::Inside sendDataChannelMessage");
+    NSLog(@"DataChannel::Inside sendDataChannelMessage");
     if(isDataChannelOpened && _dataChannel != nil)
     {
-        NSLog(@"HarishDataChannel::Sending buffer");
+        NSLog(@"DataChannel::Sending buffer");
         //NSData *data = [[NSData alloc]initWithBase64EncodedString:@"hi...its harish here" options:NSDataBase64DecodingIgnoreUnknownCharacters];
        // NSData* data = [@"hi...its harish here" dataUsingEncoding:NSUTF8StringEncoding];
         RTCDataBuffer *buffer = [[RTCDataBuffer alloc]initWithData:imgData isBinary:true];
@@ -2736,7 +2725,7 @@ if(sessionConfig.isBWCheckEnable){
             NSError *error = [NSError errorWithDomain:Session code:ERR_DATA_SEND userInfo:details];
             [self.delegate onSessionError:error.description errorCode:error.code additionalData:nil];
         }
-        NSLog(@"HarishDataChannel::retValue = %d",retValue);
+        NSLog(@"DataChannel::retValue = %d",retValue);
     }
   
 }
@@ -2746,7 +2735,7 @@ if(sessionConfig.isBWCheckEnable){
 // Called when the data channel state has changed.
 - (void)channelDidChangeState:(RTCDataChannel*)channel;
 {
-    NSLog(@"HarishDataChannel::Inside channelDidChangeState");
+    NSLog(@"DataChannel::Inside channelDidChangeState");
     NSLog(@"channel.label = %@",channel.label);
     NSLog(@"channel.state = %d",channel.state);
     if(channel.state == kRTCDataChannelStateOpen)
@@ -2779,7 +2768,7 @@ didReceiveMessageWithBuffer:(RTCDataBuffer*)buffer;
         if ([[json allKeys] containsObject:@"action"])
         {
             NSString* action  = [[json objectForKey:@"action"] lowercaseString];
-            NSLog(@"HarishDataChannel::Inside didReceiveMessageWithBuffer action = %@",action);
+            NSLog(@"DataChannel::Inside didReceiveMessageWithBuffer action = %@",action);
             if(![action compare:@"start"])
             {
                 recievedDataId = [json objectForKey:@"dataId"];
@@ -2828,7 +2817,7 @@ didReceiveMessageWithBuffer:(RTCDataBuffer*)buffer;
 - (void)peerConnection:(RTCPeerConnection*)peerConnection
     didOpenDataChannel:(RTCDataChannel*)dataChannel;
 {
-    NSLog(@"HarishDataChannel::Inside didOpenDataChannel");
+    NSLog(@"DataChannel::Inside didOpenDataChannel");
     if (_dataChannel == nil)
     {
         _dataChannel = dataChannel;
@@ -3059,7 +3048,7 @@ didReceiveMessageWithBuffer:(RTCDataBuffer*)buffer;
     
     if (webrtcstack.isVideoBridgeEnable)
     {
-        if ([[occupantJID full] containsString:@"focus"] || [[occupantJID full] containsString:@"xrtc_sp00f_f0cus"])
+        if ([[occupantJID full] containsString:@"focus"])
         {
             // Note down the occupant JID
             targetJid = occupantJID;

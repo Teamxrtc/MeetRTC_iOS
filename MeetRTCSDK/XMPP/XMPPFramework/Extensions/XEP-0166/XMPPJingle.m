@@ -232,11 +232,18 @@
     // Parse SDP
     NSString *sdp = [sdpUtil XMPPToSDPNew:iq];
     NSString *msid = [sdpUtil XMPPToMsid:iq];
-    NSArray *newMsids=[msid componentsSeparatedByString:@" "];
-    msid=[newMsids objectAtIndex:0];
-    if (![msids containsObject:msid])
+    if(msid!=nil)
     {
-        [msids addObject:msid];
+        NSArray *newMsids=[msid componentsSeparatedByString:@" "];
+        if (newMsids.count>0)
+        {
+            msid=[newMsids objectAtIndex:0];
+            if (![msids containsObject:msid])
+            {
+                [msids addObject:msid];
+            }
+        }
+        
     }
     
     if (!addNow)

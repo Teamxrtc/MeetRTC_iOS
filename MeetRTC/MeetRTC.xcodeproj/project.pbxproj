@@ -225,7 +225,7 @@
 				TargetAttributes = {
 					517CE3531C0C4D93000B433D = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = PBB4TH8ML5;
+						DevelopmentTeam = VP7KWHY834;
 					};
 				};
 			};
@@ -410,7 +410,7 @@
 					"-ObjC",
 					"-lxml2",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Comcast.xfinityVideoShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcast.MeetRTC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -439,7 +439,7 @@
 					"-ObjC",
 					"-lxml2",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = Comcast.xfinityVideoShare;
+				PRODUCT_BUNDLE_IDENTIFIER = com.comcast.MeetRTC;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

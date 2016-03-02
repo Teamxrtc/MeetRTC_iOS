@@ -25,7 +25,7 @@
 #import "WebRTCSessionConfig.h"
 #import "WebRTCStackConfig.h"
 #import "RTCDataChannel.h"
-@class XfinityVideoShareVideoCall,WebRTCStatsCollector,WebRTCStatReport,WebRTCSessionConfig,WebRTCStackConfig;
+@class WebRTCStatsCollector,WebRTCStatReport,WebRTCSessionConfig,WebRTCStackConfig;
 
 typedef enum
 {

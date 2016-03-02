@@ -310,12 +310,12 @@ NSString* const SocketIOException = @"SocketIOException";
     //NSLog(@"socket.io connected.");
     // Send a reg message
     //added
-   // NSDictionary *value = [NSDictionary dictionaryWithObjectsAndKeys: @"stb@comcast.net",@"address", nil];
+   // NSDictionary *value = [NSDictionary dictionaryWithObjectsAndKeys: @"abc@xyz.com",@"address", nil];
    // NSDictionary *values = [NSDictionary dictionaryWithDictionary:value];
    // NSLog(@"After creating first NSDictionary.");
     //NSDictionary *outstream = [NSDictionary dictionaryWithObjectsAndKeys: value, @"args", @"reg_client_message",@"name", nil];
    // NSLog(@"sending registration data : %@", values);
-    //@{@"args" : @{@"address" : @"stb@comcast.net"}, @"name" :[@"reg_client_message" ]};
+    //@{@"args" : @{@"address" : @"abc@xyz.com"}, @"name" :[@"reg_client_message" ]};
     //[socketIO sendMessage:@"hello back!" withAcknowledge:cb];
     //NSLog(@"Before Sending");
     //[socketIO sendJSON:(outstream) withAcknowledge:cb];

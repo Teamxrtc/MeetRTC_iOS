@@ -6,8 +6,8 @@
 //  Copyright 2014 Comcast Cable Communications Management, LLC.
 //
 
-#ifndef XfinityVideoShare_WebRTCUtil_h
-#define XfinityVideoShare_WebRTCUtil_h
+#ifndef meet_WebRTCUtil_h
+#define meet_WebRTCUtil_h
 typedef enum
 {
     outgoing,

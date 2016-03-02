@@ -1273,9 +1273,9 @@ enum XMPPStreamConfig
 			// 
 			// For example, one may setup a private xmpp server for internal testing on their local network.
 			// The xmpp domain of the server may be something like "testing.mycompany.com",
-			// but since the server is internal, an IP (192.168.1.22) is used as the hostname to connect.
+			// but since the server is internal, an IP (192.168.x.x) is used as the hostname to connect.
 			// 
-			// Proper connection requires a TCP connection to the IP (192.168.1.22),
+			// Proper connection requires a TCP connection to the IP (192.168.x.x),
 			// but the xmpp handshake requires the xmpp domain (testing.mycompany.com).
 			
 			NSString *errMsg = @"You must set myJID before calling connect.";

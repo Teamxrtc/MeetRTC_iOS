@@ -42,7 +42,7 @@
 @interface RTCMediaStreamTrack : NSObject
 
 @property(nonatomic, readonly) NSString* kind;
-@property(nonatomic, readonly) NSString* label;
+@property(nonatomic, readonly) NSString* label; 
 @property(nonatomic, weak) id<RTCMediaStreamTrackDelegate> delegate;
 
 - (BOOL)isEnabled;
