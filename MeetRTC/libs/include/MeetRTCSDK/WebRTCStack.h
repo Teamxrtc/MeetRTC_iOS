@@ -60,6 +60,9 @@ typedef enum : NSInteger {
 - (BOOL)isVideoEnable;
 - (void) showStatus:(NSString*)msg;
 - (void) onStateChange:(NetworkState)state;
+
+//for speaker
+- (void) onAudioSessionRouteChanged:(NSNotification*)notification;
 @end
 
 @interface WebRTCStack : NSObject<WebRTCStreamDelegate,WebRTCHTTPDelegate>
@@ -142,6 +145,12 @@ typedef enum : NSInteger {
 //XMPP
 -(void)initilizeXMPP : (NSDictionary *)input;
 
+
+//for speaker
+-(int) switchMic:(BOOL)builtin;
+-(int) switchSpeaker:(BOOL)builtin;
+-(void) addAudioRouteNotification;
+-(BOOL) isHeadsetAvailable;
 @end
 #endif
 
