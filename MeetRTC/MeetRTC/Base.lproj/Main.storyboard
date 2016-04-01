@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="diK-4i-Dhw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="diK-4i-Dhw">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -177,10 +177,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g0X-az-btX" userLabel="Button Container View">
-                                <rect key="frame" x="20" y="204" width="40" height="160"/>
+                                <rect key="frame" x="20" y="173" width="40" height="221"/>
                                 <subviews>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ary-Ex-EM2" userLabel="Hangup Button">
-                                        <rect key="frame" x="0.0" y="60" width="40" height="40"/>
+                                        <rect key="frame" x="0.0" y="121" width="40" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="endCall">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -190,7 +190,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFF-zC-ThG">
-                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <rect key="frame" x="0.0" y="61" width="40" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" backgroundImage="unmute">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -200,7 +200,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3oM-pd-bYO">
-                                        <rect key="frame" x="0.0" y="120" width="40" height="40"/>
+                                        <rect key="frame" x="0.0" y="181" width="40" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" backgroundImage="videoOn">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -209,11 +209,21 @@
                                             <action selector="videoControlButtonClicked:" destination="J1w-Aq-uCT" eventType="touchUpInside" id="wXw-VS-Qhc"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eqQ-IG-WKZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" backgroundImage="speakerOn">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="speakerButtonClicked:" destination="J1w-Aq-uCT" eventType="touchUpInside" id="vIH-Bh-bhd"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="4Vo-6L-4rV"/>
-                                    <constraint firstAttribute="height" constant="160" id="CEN-dF-IBy"/>
+                                    <constraint firstAttribute="height" constant="221" id="CEN-dF-IBy"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="VK7-6r-yFS">
@@ -283,6 +293,7 @@
                         <outlet property="remoteViewLeftConstraint" destination="2yE-7T-NGk" id="oUS-xs-mjv"/>
                         <outlet property="remoteViewRightConstraint" destination="XSz-uA-qyS" id="2y9-nX-YSJ"/>
                         <outlet property="remoteViewTopConstraint" destination="BVs-jc-H31" id="Pox-Aj-Bn7"/>
+                        <outlet property="speakerButton" destination="eqQ-IG-WKZ" id="LSk-ME-O5b"/>
                         <outlet property="statusLabel" destination="MyL-LE-M3L" id="ceG-hY-5Li"/>
                         <outlet property="urlLabel" destination="eYR-ry-Lol" id="PED-t3-eIt"/>
                         <outlet property="videoControlButton" destination="3oM-pd-bYO" id="SBB-jw-sFX"/>
@@ -297,6 +308,7 @@
         <image name="Config" width="44" height="44"/>
         <image name="endCall" width="25" height="11"/>
         <image name="refresh" width="50" height="50"/>
+        <image name="speakerOn" width="128" height="128"/>
         <image name="unmute" width="128" height="128"/>
         <image name="videoOn" width="128" height="128"/>
     </resources>

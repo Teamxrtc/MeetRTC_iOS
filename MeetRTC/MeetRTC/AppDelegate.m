@@ -31,10 +31,64 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
         
     }
-
+    
+    //redirect to log file
+    // [self redirectConsoleLogToDocumentFolder];
     return YES;
 }
+- (void) redirectConsoleLogToDocumentFolder
+{
+    [self deleteOldFile];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                         NSUserDomainMask, YES);
+    
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *logPath = [documentsDirectory stringByAppendingPathComponent:@"console.log"];
+    freopen([logPath fileSystemRepresentation],"a+",stderr);
+}
+-(void)deleteOldFile
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                         NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+     NSString *logPath = [documentsDirectory stringByAppendingPathComponent:@"console.log"];
+    long long int folderSize = [self getFolderSize:documentsDirectory];
+    
+    if (folderSize>10485760) {
 
+        if (![[NSFileManager defaultManager] fileExistsAtPath:logPath])
+        {
+            NSLog(@"log File not found");
+        }
+        NSError *error;
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:logPath error:&error];
+        if (success) {
+            NSLog(@"Successfully deleted log file");
+        }
+        else
+        {
+            NSLog(@"Error in deleting log file");
+        }
+    }
+    else
+    {
+          NSLog(@"log file size is less than max allowed size");
+    }
+}
+- (unsigned long long int)getFolderSize:(NSString *)folderPath {
+    NSArray *filesArray = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:folderPath error:nil];
+    NSEnumerator *filesEnumerator = [filesArray objectEnumerator];
+    NSString *fileName;
+    unsigned long long int fileSize = 0;
+
+    while (fileName = [filesEnumerator nextObject]) {
+        NSError *error = nil;
+        NSDictionary *fileDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:[folderPath stringByAppendingPathComponent:fileName] error:&error];
+        fileSize += [fileDictionary fileSize];
+    }
+    
+    return fileSize;
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

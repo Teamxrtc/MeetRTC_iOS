@@ -44,9 +44,11 @@ typedef enum
 @property (strong, nonatomic) IBOutlet UIButton *endCallButton;
 @property (weak, nonatomic) IBOutlet UIButton *muteButton;
 @property (weak, nonatomic) IBOutlet UIButton *videoControlButton;
+@property (weak, nonatomic) IBOutlet UIButton *speakerButton;
 
 - (IBAction)videoControlButtonClicked:(id)sender;
 - (IBAction)muteButtonClicked:(id)sender;
+- (IBAction)speakerButtonClicked:(id)sender;
 
 
 @property (strong, nonatomic) NSString *roomUrl;
@@ -83,5 +85,6 @@ typedef enum
 @property(nonatomic,retain) NSString *incomingCallType;
 @property (nonatomic , strong) NSDictionary *settingsDetails;
 
-
+//for speaker
+@property(nonatomic) BOOL builtinAudioDevices;
 @end

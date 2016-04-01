@@ -10,7 +10,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface MRTCVideoViewController () <WebRTCStackDelegate,WebRTCSessionDelegate,UIAlertViewDelegate>
-
+@property (nonatomic , strong) NSMutableArray *cellsReference;
 @end
 
 @implementation MRTCVideoViewController
@@ -20,6 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.cellsReference=[[NSMutableArray alloc]init];
     self.urlLabel.text=[NSString stringWithFormat:@"%@/%@",self.serverId,roomId];
     self.isZoom = NO;
     participantsDetails=[[NSMutableArray alloc]init];
@@ -40,11 +41,11 @@
     [self.remoteView setDelegate:self];
     
     //Getting Orientation change
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(orientationChanged:)
-//                                                 name:@"UIDeviceOrientationDidChangeNotification"
-//                                               object:nil];
-//    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationChanged:)
+                                                 name:@"UIDeviceOrientationDidChangeNotification"
+                                               object:nil];
+    
     
     [self startAllServices];
     
@@ -53,6 +54,9 @@
     _myCollectionView.dataSource=self;
     _myCollectionView.delegate=self;
     
+    
+    //for speaker
+     _builtinAudioDevices = true;
 }
 -(void)startAllServices
 {
@@ -223,7 +227,42 @@
 #pragma mark - RTCEAGLVideoViewDelegate
 
 - (void)videoView:(RTCEAGLVideoView *)videoView didChangeVideoSize:(CGSize)size {
-
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+        
+        if (orientation == UIDeviceOrientationLandscapeLeft || orientation == UIDeviceOrientationLandscapeRight)
+        {
+            NSLog(@"orientation landscape");
+        }
+        else
+        {
+            NSLog(@"orientation protrait");
+        }
+        self.remoteVideoSize=size;
+        CGSize defaultAspectRatio = CGSizeMake(4, 3);
+        CGSize remoteAspectRatio = CGSizeEqualToSize(self.remoteVideoSize, CGSizeZero) ?
+        defaultAspectRatio : self.remoteVideoSize;
+        
+        // This is needed as the resolution has to be divisible by 16 for perfect decoding
+        // so in order to fit in the screen, the following code is required
+        float aspectRatioOfBounds = (self.view.bounds.size.width/self.view.bounds.size.height);
+        float aspectRatioOfRemote = (remoteAspectRatio.width/remoteAspectRatio.height);
+        if((aspectRatioOfRemote <= (aspectRatioOfBounds * 1.05)) && (aspectRatioOfRemote >= (aspectRatioOfBounds * 0.95)))
+        {
+            self.remoteView.frame = self.view.bounds;
+        }
+        else
+        {
+            CGRect remoteVideoFrame =
+            AVMakeRectWithAspectRatioInsideRect(remoteAspectRatio,
+                                                self.view.bounds);
+            self.remoteView.frame = remoteVideoFrame;
+            
+        }
+        [self.view layoutIfNeeded];
+        [self.myCollectionView reloadData];
+    });
 }
 #pragma mark - WebRTCStack Delegate
 
@@ -429,7 +468,7 @@
     if (self.muteFlag==NO)
     {
         self.muteFlag=YES;
-        [_muteButton setImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
+        [_muteButton setBackgroundImage:[UIImage imageNamed:@"mute.png"] forState:UIControlStateNormal];
         [stream muteAudio];
         NSDictionary *json = @{@"type" : @"configselection" , @"reason" : @"Remote party has Muted"};
         [session onUserConfigSelection:json];
@@ -437,11 +476,44 @@
     else
     {
         self.muteFlag=NO;
-        [_muteButton setImage:[UIImage imageNamed:@"unmute.png"] forState:UIControlStateNormal];
+        [_muteButton setBackgroundImage:[UIImage imageNamed:@"unmute.png"] forState:UIControlStateNormal];
         [stream unmuteAudio];
         NSDictionary *json = @{@"type" : @"configselection" , @"reason" : @"Remote party has Unmuted"};
         [session onUserConfigSelection:json];
         
     }
+}
+
+- (IBAction)speakerButtonClicked:(id)sender {
+    if(_builtinAudioDevices)
+    {
+        [stack switchSpeaker:_builtinAudioDevices];
+        [self.speakerButton setBackgroundImage:[UIImage imageNamed:@"speakerOff"] forState:UIControlStateNormal];
+        _builtinAudioDevices = false;
+    }
+    else
+    {
+        [stack switchSpeaker:_builtinAudioDevices];
+        [self.speakerButton setBackgroundImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
+        _builtinAudioDevices = true;
+    }
+}
+-(void) onAudioSessionRouteChanged:(NSNotification*)notification
+{
+    if(stack.isHeadsetAvailable)
+    {
+        [self.speakerButton setBackgroundImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
+        _builtinAudioDevices = true;
+        [stack switchMic:false];
+    }
+    else
+    {
+        [stack switchMic:true];
+    }
+    
+}
+- (void)orientationChanged:(NSNotification *)notification{
+    
+    [self videoView:self.remoteView didChangeVideoSize:self.remoteVideoSize];
 }
 @end

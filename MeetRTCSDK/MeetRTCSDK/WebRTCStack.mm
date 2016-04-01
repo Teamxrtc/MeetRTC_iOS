@@ -915,4 +915,205 @@ NSString* const TAG5 = @"WebRTCStack";
     [[XMPPWorker sharedInstance] record:state];
 }
 
+-(void) addAudioRouteNotification
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(audioSessionRouteChanged:)
+                                                 name:AVAudioSessionRouteChangeNotification
+                                               object:nil];
+}
+-(int) switchMic: (BOOL)builtin
+{
+    NSError* theError = nil;
+    BOOL result = YES;
+    
+    AVAudioSession* inAudioSession = [AVAudioSession sharedInstance];
+    
+    result = [inAudioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&theError];
+    if (!result)
+    {
+        NSLog(@"switchMic::setCategory failed");
+    }
+    
+    result = [inAudioSession setActive:YES error:&theError];
+    if (!result)
+    {
+        NSLog(@"V::setActive failed");
+    }
+    
+    // Get the set of available inputs. If there are no audio accessories attached, there will be
+    // only one available input -- the built in microphone.
+    NSArray* inputs = [inAudioSession availableInputs];
+    
+    
+    // Locate the Port corresponding to the built-in microphone.
+    AVAudioSessionPortDescription* micPort = nil;
+    if(builtin)
+    {
+        for (AVAudioSessionPortDescription* port in inputs)
+        {
+            if ([port.portType isEqualToString:AVAudioSessionPortBuiltInMic])
+            {
+                micPort = port;
+                break;
+            }
+        }
+    }
+    else
+    {
+        for (AVAudioSessionPortDescription* port in inputs)
+        {
+            if ([port.portType isEqualToString:AVAudioSessionPortHeadsetMic])
+            {
+                micPort = port;
+                break;
+            }
+        }
+        
+        if(micPort == nil)
+            return 0;
+        
+    }
+    
+    NSLog(@"There are %u data sources for port :\"%@\"", (unsigned)[micPort.dataSources count], micPort);
+    NSLog(@"%@", micPort.dataSources);
+    
+    // loop over the built-in mic's data sources and attempt to locate the front microphone
+    AVAudioSessionDataSourceDescription* frontDataSource = nil;
+    for (AVAudioSessionDataSourceDescription* source in micPort.dataSources)
+    {
+        if ([source.orientation isEqual:AVAudioSessionOrientationFront])
+        {
+            frontDataSource = source;
+            break;
+        }
+    }
+    
+    if (frontDataSource)
+    {
+        NSLog(@"Currently selected source is \"%@\" for port \"%@\"", micPort.selectedDataSource.dataSourceName, micPort.portName);
+        NSLog(@"Attempting to select source \"%@\" on port \"%@\"", frontDataSource, micPort.portName);
+        
+        // Set a preference for the front data source.
+        theError = nil;
+        result = [micPort setPreferredDataSource:frontDataSource error:&theError];
+        if (!result)
+        {
+            // an error occurred. Handle it!
+            NSLog(@"setPreferredDataSource failed");
+        }
+    }
+    
+    // Make sure the built-in mic is selected for input. This will be a no-op if the built-in mic is
+    // already the current input Port.
+    theError = nil;
+    result = [inAudioSession setPreferredInput:micPort error:&theError];
+    if (!result)
+    {
+        // an error occurred. Handle it!
+        NSLog(@"setPreferredInput failed");
+    }
+    
+    return 1;
+    
+}
+-(BOOL) isHeadsetAvailable
+{
+    AVAudioSessionRouteDescription *currentRoute = [[AVAudioSession sharedInstance] currentRoute];
+    for (AVAudioSessionPortDescription *output in currentRoute.outputs) {
+        if ([[output portType] isEqualToString:AVAudioSessionPortHeadphones]) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+-(int) switchSpeaker: (BOOL)builtin
+{
+    NSError* theError = nil;
+    BOOL result = YES;
+    
+    AVAudioSession* outAudioSession = [AVAudioSession sharedInstance];
+    
+    result = [outAudioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&theError];
+    if (!result)
+    {
+        NSLog(@"switchSpeaker::setCategory failed");
+    }
+    
+    result = [outAudioSession setActive:YES error:&theError];
+    if (!result)
+    {
+        NSLog(@"switchSpeaker::setActive failed");
+    }
+    
+    
+    //    if(outAudioSession.outputNumberOfChannels > 1)
+    //    {
+    if(builtin)
+    {
+        result = [outAudioSession  overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&theError];
+        if(!result)
+        {
+            NSLog(@"overrideOutputAudioPort to speaker failed");
+        }
+        
+    }
+    else
+    {
+        result = [outAudioSession  overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&theError];
+        if(!result)
+        {
+            NSLog(@"overrideOutputAudioPort to headset failed");
+        }
+    }
+    //    }
+    return 1;
+}
+
+-(void) audioSessionRouteChanged:(NSNotification*)notification
+{
+    NSDictionary *interuptionDict = notification.userInfo;
+    
+    NSInteger routeChangeReason = [[interuptionDict valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+    
+    switch (routeChangeReason) {
+        case AVAudioSessionRouteChangeReasonUnknown:
+            NSLog(@"routeChangeReason : AVAudioSessionRouteChangeReasonUnknown");
+            break;
+            
+        case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
+            // a headset was added or removed
+            NSLog(@"routeChangeReason : AVAudioSessionRouteChangeReasonNewDeviceAvailable");
+            [self.delegate onAudioSessionRouteChanged:notification];
+            break;
+            
+        case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
+            // a headset was added or removed
+            NSLog(@"routeChangeReason : AVAudioSessionRouteChangeReasonOldDeviceUnavailable");
+            [self.delegate onAudioSessionRouteChanged:notification];
+            break;
+            
+        case AVAudioSessionRouteChangeReasonCategoryChange:
+            NSLog(@"routeChangeReason : AVAudioSessionRouteChangeReasonCategoryChange");//
+            break;
+            
+        case AVAudioSessionRouteChangeReasonOverride:
+            NSLog(@"routeChangeReason : AVAudioSessionRouteChangeReasonOverride");
+            break;
+            
+        case AVAudioSessionRouteChangeReasonWakeFromSleep:
+            NSLog(@"routeChangeReason : AVAudioSessionRouteChangeReasonWakeFromSleep");
+            break;
+            
+        case AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory:
+            NSLog(@"routeChangeReason : AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory");
+            break;
+            
+        default:
+            break;
+    }
+    
+}
+
 @end
