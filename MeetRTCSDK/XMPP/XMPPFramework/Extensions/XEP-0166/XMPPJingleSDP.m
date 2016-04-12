@@ -603,7 +603,7 @@
     {
         NSArray *sources = [[[mediaContents objectAtIndex:i] elementForName:@"description"] elementsForName:@"source"];
         NSString *ssrcValue=@"NA";
-        NSMutableArray *tempObjects=[[oldAVSDP objectAtIndex:i] mutableCopy];
+        NSMutableArray *tempObjects=[[oldAVSDP objectAtIndex:(i-1)] mutableCopy];
         NSMutableArray *tempKVos=[[NSMutableArray alloc]init];
         //expecting only one source of video/audio per participant
         for (int i=0; i < 1; i++)
@@ -626,7 +626,7 @@
   
         }
         
-        [oldAVSDP replaceObjectAtIndex:i withObject:tempKVos];
+        [oldAVSDP replaceObjectAtIndex:(i-1) withObject:tempKVos];
     
     }
     [SDP appendString:contentString];
