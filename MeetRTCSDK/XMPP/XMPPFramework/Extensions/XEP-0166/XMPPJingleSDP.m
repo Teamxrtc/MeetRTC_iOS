@@ -90,7 +90,18 @@
     // So we need codec list before we could create this line
     NSArray *codeclist = [[content elementForName:@"description"] elementsForName:@"payload-type"];
     
-    [contentString appendFormat:@"m=%@ 1 RTP/SAVPF",(NSString *)[content attributeStringValueForName:@"name"  ]];
+    //issue #7 - Enhancement
+    //dynamically choose RTP / SCTP based on data or other contents
+    NSString *contentname=(NSString *)[content attributeStringValueForName:@"name"];
+    if ([contentname caseInsensitiveCompare:@"data"]==NSOrderedSame)
+    {
+        [contentString appendFormat:@"m=%@ 1 DTLS/SCTP 5000",(NSString *)[content attributeStringValueForName:@"name"]];
+    }
+    else
+    {
+        [contentString appendFormat:@"m=%@ 1 RTP/SAVPF",(NSString *)[content attributeStringValueForName:@"name"]];
+    }
+
     for (int i=0; i<[codeclist count]; i++)
     {
         [contentString appendFormat:@" %@", [[codeclist objectAtIndex:i] attributeStringValueForName:@"id"] ];
@@ -208,6 +219,14 @@
     if ([[content elementForName:@"description"] elementForName:@"rtcp-mux"] )
     {
         [contentString appendString:@"a=rtcp-mux\r\n"];
+    }
+    
+    //issue #7 - Enhancement
+    //create an sctpmap attribute for the webrtc-datachannel protocol
+    NSString *tempContentName=(NSString *)[content attributeStringValueForName:@"name"];
+    if ([tempContentName caseInsensitiveCompare:@"data"]==NSOrderedSame)
+    {
+        [contentString appendString:@"a=sctpmap:5000 webrtc-datachannel 1024\r\n"];
     }
     
     // Next line is crypto
@@ -511,7 +530,8 @@
         NSArray *sources = [[[mediaContents objectAtIndex:i] elementForName:@"description"] elementsForName:@"source"];
         NSString *ssrcValue=@"NA";
         NSMutableString *tempContentString = [[NSMutableString alloc]init];
-            for (int i=0; i < [sources count]; i++)
+        //expecting only one source of video/audio per participant
+            for (int i=0; i < 1; i++)
             {
                 NSXMLElement *source = [sources objectAtIndex:i];
                 ssrcValue = [source attributeStringValueForName:@"ssrc"];
@@ -536,14 +556,25 @@
                          ];
                     }
                 }
+                NSDictionary *ssrcContent=[[NSDictionary alloc]initWithObjectsAndKeys:tempContentString,@"value",ssrcValue,@"name", nil];
+                [tempObjects addObject:ssrcContent];
             }
-        NSDictionary *ssrcContent=[[NSDictionary alloc]initWithObjectsAndKeys:tempContentString,@"value",ssrcValue,@"name", nil];
-        [tempObjects addObject:ssrcContent];
+        
         [oldAVSDP replaceObjectAtIndex:(i-1) withObject:tempObjects];
         [SDP appendString:contentString];
 
     }
-
+    //issue #7 - Enhancement
+    //Append data content at last
+    if (oldAVSDP.count==3)
+    {
+        NSMutableArray *tempObjects=[[oldAVSDP lastObject] mutableCopy];
+        for (int x=0; x<tempObjects.count; x++)
+        {
+            NSDictionary *tempContent=[tempObjects objectAtIndex:x];
+            [SDP appendFormat:@"%@",[tempContent objectForKey:@"value"]];
+        }
+    }
     return SDP;
 }
 - (NSString *)XMPPToSDPRemove:(XMPPIQ *)iq
@@ -572,9 +603,10 @@
     {
         NSArray *sources = [[[mediaContents objectAtIndex:i] elementForName:@"description"] elementsForName:@"source"];
         NSString *ssrcValue=@"NA";
-        NSMutableArray *tempObjects=[[oldAVSDP objectAtIndex:(i-1)] mutableCopy];
+        NSMutableArray *tempObjects=[[oldAVSDP objectAtIndex:i] mutableCopy];
         NSMutableArray *tempKVos=[[NSMutableArray alloc]init];
-        for (int i=0; i < [sources count]; i++)
+        //expecting only one source of video/audio per participant
+        for (int i=0; i < 1; i++)
         {
             NSXMLElement *source = [sources objectAtIndex:i];
             ssrcValue = [source attributeStringValueForName:@"ssrc"];
@@ -582,7 +614,7 @@
             for (int m=0; m<tempObjects.count; m++)
             {
                 NSDictionary *tempContent=[tempObjects objectAtIndex:m];
-                if (![[tempContent objectForKey:@"name"] caseInsensitiveCompare:ssrcValue]==NSOrderedSame)
+                if ([[tempContent objectForKey:@"name"] caseInsensitiveCompare:ssrcValue]!=NSOrderedSame)
                 {
                     [contentString appendFormat:@"%@",[tempContent objectForKey:@"value"]];
                     NSDictionary *ssrcContent=[[NSDictionary alloc]initWithObjectsAndKeys:[tempContent objectForKey:@"value"],@"value",[tempContent objectForKey:@"name"],@"name", nil];
@@ -594,10 +626,23 @@
   
         }
         
-        [oldAVSDP replaceObjectAtIndex:(i-1) withObject:tempKVos];
+        [oldAVSDP replaceObjectAtIndex:i withObject:tempKVos];
     
     }
     [SDP appendString:contentString];
+    
+    //issue #7 - Enhancement
+    //Append data content at last
+    if (oldAVSDP.count==3)
+    {
+        NSMutableArray *tempObjects=[[oldAVSDP lastObject] mutableCopy];
+        for (int x=0; x<tempObjects.count; x++)
+        {
+            NSDictionary *tempContent=[tempObjects objectAtIndex:x];
+            [SDP appendFormat:@"%@",[tempContent objectForKey:@"value"]];
+        }
+    }
+
     return SDP;
 
 }
