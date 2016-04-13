@@ -725,6 +725,14 @@ static NSInteger sortFieldValues(NSXMLElement *value1, NSXMLElement *value2, voi
     NSXMLElement *feature9 = [NSXMLElement elementWithName:@"feature"];
     [feature9 addAttributeWithName:@"var" stringValue:@"urn:xmpp:rayo:client:1"];
     
+    //issue #7 - Enhancement
+    //Adding data channel capabilities
+    NSXMLElement *feature11 = [NSXMLElement elementWithName:@"feature"];
+    [feature11 addAttributeWithName:@"var" stringValue:@"urn:xmpp:jingle:apps:dtls:0"];
+    
+    NSXMLElement *feature12 = [NSXMLElement elementWithName:@"feature"];
+    [feature12 addAttributeWithName:@"var" stringValue:@"urn:xmpp:jingle:transports:dtls-sctp:1"];
+    
     [query addChild:feature1];
 	[query addChild:feature2];
 	
@@ -737,6 +745,11 @@ static NSInteger sortFieldValues(NSXMLElement *value1, NSXMLElement *value2, voi
     [query addChild:feature7];
     [query addChild:feature8];
     [query addChild:feature9];
+    
+    //issue #7 - Enhancement
+    //Adding data channel features
+    [query addChild:feature11];
+    [query addChild:feature12];
     
 	// Now prompt the delegates to add any additional features.
 	
