@@ -118,6 +118,7 @@
     [self.localViewWidthConstraint setConstant:self.view.frame.size.width];
     [self.footerViewBottomConstraint setConstant:0.0f];
     [self.view bringSubviewToFront:self.footerView];
+    
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
@@ -200,11 +201,23 @@
 
 - (void)toggleButtonContainer {
     [UIView animateWithDuration:0.3f animations:^{
+        
+        //Adjust the values to hide or show views
         if (self.buttonContainerViewLeftConstraint.constant <= -40.0f) {
             [self.buttonContainerViewLeftConstraint setConstant:20.0f];
             [self.buttonContainerView setAlpha:1.0f];
         } else {
             [self.buttonContainerViewLeftConstraint setConstant:-40.0f];
+            [self.buttonContainerView setAlpha:0.0f];
+        }
+        
+        if (self.thumbviewbottonConstraint.constant<=-150.0f)
+        {
+            [self.thumbviewbottonConstraint setConstant:22.0f];
+            [self.myCollectionView setAlpha:1.0f];
+        }
+        else {
+            [self.thumbviewbottonConstraint setConstant:-150.0f];
             [self.buttonContainerView setAlpha:0.0f];
         }
         [self.view layoutIfNeeded];

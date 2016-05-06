@@ -23,7 +23,7 @@
 	NSXMLElement *sdpFprElement;
     NSString *gUfrag;
     NSString *gPwd;
-    NSMutableArray *oldAVSDP;
+    NSMutableDictionary *oldAVDContent;
 }
 - (XMPPIQ *)SDPToXMPP:(NSString *)sdp action:(NSString *)action initiator:(XMPPJID *)initiator target:(XMPPJID *)target UID:(NSString *)UID SID:(NSString *)SID;
 - (XMPPIQ *)CandidateToXMPP:(NSDictionary *)dict action:(NSString *)action initiator:(XMPPJID *)initiator target:(XMPPJID *)target UID:(NSString *)UID SID:(NSString *)SID;

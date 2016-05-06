@@ -1404,10 +1404,14 @@ NSString* const TAG4 = @"WebRTCSession";
 
     if ([type caseInsensitiveCompare:@"Remove"]==NSOrderedSame)
     {
+        for (int i=0; i<msidInput.count; i++)
+        {
+            NSString *tempName=[msidInput objectAtIndex:i];
+            
             for (int j=0; j<streamsSession.count; j++)
             {
-                NSString *tempName=[msidInput objectAtIndex:0];
                 NSDictionary *tempStreams=[streamsSession objectAtIndex:j];
+                
                 if ([[tempStreams objectForKey:@"name"] caseInsensitiveCompare:tempName]==NSOrderedSame)
                 {
                     RTCMediaStream *stream=[[streamsSession objectAtIndex:j] objectForKey:@"streamInfo"];
@@ -1419,14 +1423,15 @@ NSString* const TAG4 = @"WebRTCSession";
                     [streamsSession removeObjectAtIndex:j];
                     [msidsSession removeObject:tempName];
                     
-                    if ([self.delegate respondsToSelector:@selector(sessionRemoveMedia::)]) {
-                        
-                        [self.delegate sessionRemoveMedia:stream:streamsSession];
-                    }
-                    
-                    break;
                 }
+                
             }
+            
+        }
+        if ([self.delegate respondsToSelector:@selector(sessionRemoveMedia::)]) {
+            
+            [self.delegate sessionRemoveMedia:nil:streamsSession];
+        }
         conferenceFlag=(int)streamsSession.count;
     }
     
