@@ -70,6 +70,7 @@ typedef enum
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *localViewBottomConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *footerViewBottomConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *buttonContainerViewLeftConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *thumbviewbottonConstraint;
 
 
 //meetrtc sdk

@@ -231,19 +231,16 @@
 {
     // Parse SDP
     NSString *sdp = [sdpUtil XMPPToSDPNew:iq];
-    NSString *msid = [sdpUtil XMPPToMsid:iq];
-    if(msid!=nil)
+    NSArray *tempMsids = [sdpUtil XMPPToMsid:iq];
+    if(tempMsids!=nil && tempMsids.count>0)
     {
-        NSArray *newMsids=[msid componentsSeparatedByString:@" "];
-        if (newMsids.count>0)
+        for (NSString *msid in tempMsids)
         {
-            msid=[newMsids objectAtIndex:0];
             if (![msids containsObject:msid])
             {
                 [msids addObject:msid];
             }
         }
-        
     }
     
     if (!addNow)
@@ -366,12 +363,16 @@
 {
     // Parse SDP
     NSString *sdp = [sdpUtil XMPPToSDPRemove:iq];
-    NSString *msid = [sdpUtil XMPPToMsid:iq];
-    NSArray *newMsids=[msid componentsSeparatedByString:@" "];
-    msid=[newMsids objectAtIndex:0];
-    if ([msids containsObject:msid])
+    NSArray *tempMsids = [sdpUtil XMPPToMsid:iq];
+    if(tempMsids!=nil && tempMsids.count>0)
     {
-        [msids removeObject:msid];
+        for (NSString *msid in tempMsids)
+        {
+            if ([msids containsObject:msid])
+            {
+                [msids removeObject:msid];
+            }
+        }
     }
     
     // Prepare the JSON dictionary
@@ -382,9 +383,8 @@
     //[jsonDict setValue:iq.toStr forKey:@"to"];
     [jsonDict setValue:to forKey:@"to"];
     
-    NSArray *removeMsids=[[NSArray alloc]initWithObjects:msid, nil];
     // post the message to delegate
-    [self.delegate didReceiveSessionMsg:nil type:@"source-remove" data:jsonDict:removeMsids];
+    [self.delegate didReceiveSessionMsg:nil type:@"source-remove" data:jsonDict:tempMsids];
 }
 
 # pragma mark - XMPP stream methods

@@ -6,6 +6,7 @@
 //
 
 #import "MRTCViewController.h"
+#import "Reachability.h"
 
 @interface MRTCViewController ()<UITextFieldDelegate>
 
@@ -26,6 +27,23 @@
                forControlEvents:UIControlEventEditingChanged];
     
 
+}
+//Internet Connectivity
+-(BOOL)internetAvailability
+{
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    [reachability startNotifier];
+    NetworkStatus remoteHostStatus = [reachability currentReachabilityStatus];
+    
+    if(remoteHostStatus == ReachableViaWiFi || remoteHostStatus == ReachableViaWWAN)
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+    
 }
 -(void)refreshName
 {
@@ -55,9 +73,28 @@
 
 - (IBAction)joinButton:(id)sender
 {
-    NSDictionary *details=[[NSDictionary alloc]initWithObjectsAndKeys:self.roomNameField.text,@"room",[self.settingsDetails objectForKey:@"socket"],@"socket",[self.settingsDetails objectForKey:@"displayName"],@"displayName",[self.settingsDetails objectForKey:@"secured"],@"secured", nil];
+    if ([self internetAvailability])
+    {
+        NSDictionary *details=[[NSDictionary alloc]initWithObjectsAndKeys:self.roomNameField.text,@"room",[self.settingsDetails objectForKey:@"socket"],@"socket",[self.settingsDetails objectForKey:@"displayName"],@"displayName",[self.settingsDetails objectForKey:@"secured"],@"secured", nil];
+        
+        [self performSegueWithIdentifier:@"videoView" sender:details];
+    }
+    else
+    {
+        
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Check Internet Connectivity"
+                                                                       message:@"Turn On wifi/Mobile data"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action) {}];
+    
+        
+        [alert addAction:ok];
 
-    [self performSegueWithIdentifier:@"videoView" sender:details];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+   
 }
 
 - (IBAction)refreshButton:(id)sender

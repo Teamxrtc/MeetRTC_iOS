@@ -295,6 +295,7 @@
                         <outlet property="remoteViewTopConstraint" destination="BVs-jc-H31" id="Pox-Aj-Bn7"/>
                         <outlet property="speakerButton" destination="eqQ-IG-WKZ" id="LSk-ME-O5b"/>
                         <outlet property="statusLabel" destination="MyL-LE-M3L" id="ceG-hY-5Li"/>
+                        <outlet property="thumbviewbottonConstraint" destination="QLH-5K-F4a" id="xZe-jZ-VCX"/>
                         <outlet property="urlLabel" destination="eYR-ry-Lol" id="PED-t3-eIt"/>
                         <outlet property="videoControlButton" destination="3oM-pd-bYO" id="SBB-jw-sFX"/>
                     </connections>

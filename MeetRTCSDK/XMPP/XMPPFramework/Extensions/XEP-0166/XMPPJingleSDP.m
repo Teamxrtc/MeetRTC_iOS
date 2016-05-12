@@ -93,9 +93,12 @@
     //issue #7 - Enhancement
     //dynamically choose RTP / SCTP based on data or other contents
     NSString *contentname=(NSString *)[content attributeStringValueForName:@"name"];
+    NSXMLElement * transportInfo = [content elementForName:@"transport"];
+    NSXMLElement * sctpmapInfo = [transportInfo elementForName:@"sctpmap"];
+    
     if ([contentname caseInsensitiveCompare:@"data"]==NSOrderedSame)
     {
-        [contentString appendFormat:@"m=%@ 1 DTLS/SCTP 5000",(NSString *)[content attributeStringValueForName:@"name"]];
+        [contentString appendFormat:@"m=%@ 1 DTLS/SCTP %@",(NSString *)[content attributeStringValueForName:@"name"],(NSString *)[sctpmapInfo attributeStringValueForName:@"number"]];
     }
     else
     {
@@ -113,7 +116,6 @@
     [contentString appendString:@"a=rtcp:1 IN IP4 0.0.0.0\r\n"];
     
     // Next line is ice pwd etc
-    NSXMLElement * transportInfo = [content elementForName:@"transport"];
     if (transportInfo)
     {
         NSString *ufrag = [transportInfo attributeStringValueForName:@"ufrag"];
@@ -226,7 +228,7 @@
     NSString *tempContentName=(NSString *)[content attributeStringValueForName:@"name"];
     if ([tempContentName caseInsensitiveCompare:@"data"]==NSOrderedSame)
     {
-        [contentString appendString:@"a=sctpmap:5000 webrtc-datachannel 1024\r\n"];
+        [contentString appendFormat:@"a=sctpmap:%@ %@ %@\r\n",(NSString *)[sctpmapInfo attributeStringValueForName:@"number"],(NSString *)[sctpmapInfo attributeStringValueForName:@"protocol"],(NSString *)[sctpmapInfo attributeStringValueForName:@"streams"]];
     }
     
     // Next line is crypto
@@ -432,7 +434,8 @@
 - (NSString *)XMPPToSDP:(XMPPIQ *)iq
 {
     NSMutableString *SDP = [[NSMutableString alloc]init]; // TO be set once ready
-    oldAVSDP=[[NSMutableArray alloc]init];
+    oldAVDContent=[[NSMutableDictionary alloc]init]; // initiate initially
+    [oldAVDContent removeAllObjects];
     // TBD : To find a way to parse the XMPP data and convert the same to SDP
     // Parse SDP
     [SDP appendString:@"v=0\r\n"];
@@ -450,15 +453,14 @@
     }
     
     // To check if a=msid-semantic line is needed
-    [oldAVSDP removeAllObjects];
     // Add media content
     NSArray *mediaContents = [[iq elementForName:@"jingle"] elementsForName:@"content"];
     for (int i=0; i<[mediaContents count]; i++)
     {
+        NSString *contentname=(NSString *)[[mediaContents objectAtIndex:i] attributeStringValueForName:@"name"];
         NSString * mediaStr = [self parseMedia:[mediaContents objectAtIndex:i]];
-        NSDictionary *format=[[NSDictionary alloc]initWithObjectsAndKeys:mediaStr,@"value",@"format",@"name", nil];
-        NSArray *formatArray=[[NSArray alloc]initWithObjects:format, nil];
-        [oldAVSDP addObject:formatArray];
+        NSDictionary *format=[[NSDictionary alloc]initWithObjectsAndKeys:mediaStr,@"header", nil];
+        [oldAVDContent setObject:format forKey:contentname];
         if (mediaStr)
         {
             [SDP appendString:mediaStr];
@@ -466,32 +468,47 @@
     }
     return SDP;
 }
-- (NSString *)XMPPToMsid:(XMPPIQ *)iq
+- (NSArray *)XMPPToMsid:(XMPPIQ *)iq
 {
-    NSMutableString *msid = [[NSMutableString alloc]init];
+     NSMutableArray *msids = [[NSMutableArray alloc]init];
     
     // Add media content
     NSArray *mediaContents = [[iq elementForName:@"jingle"] elementsForName:@"content"];
     
-    for (int i=2; i<[mediaContents count]; i++)
+    for (int i=0; i<[mediaContents count]; i++)
     {
-        NSArray *sources = [[[mediaContents objectAtIndex:i] elementForName:@"description"] elementsForName:@"source"];
-            NSXMLElement *source = [sources objectAtIndex:0];
-            NSArray *parameters = [source elementsForName:@"parameter"];
-            
-            for (int k=0; k< [parameters count]; k++)
+        NSString *contentname=(NSString *)[[mediaContents objectAtIndex:i] attributeStringValueForName:@"name"];
+        if ([contentname caseInsensitiveCompare:@"video"]==NSOrderedSame)
+        {
+            NSArray *sources = [[[mediaContents objectAtIndex:i] elementForName:@"description"] elementsForName:@"source"];
+            if (sources.count>0)
             {
-                NSString *name = [[parameters objectAtIndex:k] attributeStringValueForName:@"name"];
-                NSString *value = [[parameters objectAtIndex:k] attributeStringValueForName:@"value"];
-                if ([name caseInsensitiveCompare:@"msid"]==NSOrderedSame)
+                for (int j=0; j<sources.count; j++)
                 {
-                    [msid appendString:value];
-                    return msid;
+                    NSXMLElement *source = [sources objectAtIndex:0];
+                    NSArray *parameters = [source elementsForName:@"parameter"];
+                    
+                    for (int k=0; k< [parameters count]; k++)
+                    {
+                        NSString *name = [[parameters objectAtIndex:k] attributeStringValueForName:@"name"];
+                        NSString *value = [[parameters objectAtIndex:k] attributeStringValueForName:@"value"];
+                        if ([name caseInsensitiveCompare:@"msid"]==NSOrderedSame)
+                        {
+                            NSArray *newMsids=[value componentsSeparatedByString:@" "];
+                            if (newMsids.count>0)
+                            {
+                                [msids addObject:[newMsids objectAtIndex:0]];
+                            }
+                        }
+                    }
+                    
                 }
             }
+
+        }
     }
     
-    return nil;
+    return msids;
 }
 - (NSString *)XMPPToSDPNew:(XMPPIQ *)iq
 {
@@ -506,32 +523,39 @@
     [SDP appendString:@"s=-\r\n"];
     [SDP appendString:@"t=0 0\r\n"];
     
-    // Add groups if it exists
-    NSString * groupStr = [self parseGroups:iq];
-    if (groupStr)
+    //issue #7 - Enhancement
+    if ([oldAVDContent allKeys].count==3)
     {
-        [SDP appendString:groupStr];
+        [SDP appendString:@"a=group:BUNDLE audio video data\r\n"];
+    }
+    else
+    {
+        [SDP appendString:@"a=group:BUNDLE audio video\r\n"];
     }
     
     // To check if a=msid-semantic line is needed
     // Add media content
     NSArray *mediaContents = [[iq elementForName:@"jingle"] elementsForName:@"content"];
     
-    for (int i=1; i<[mediaContents count]; i++)
+    for (int i=0; i<[mediaContents count]; i++)
     {
         NSMutableString *contentString = [[NSMutableString alloc]init];
-        NSMutableArray *tempObjects=[[oldAVSDP objectAtIndex:(i-1)] mutableCopy];
-        for (int m=0; m<tempObjects.count; m++)
-        {
-            NSDictionary *tempContent=[tempObjects objectAtIndex:m];
-            [contentString appendFormat:@"%@",[tempContent objectForKey:@"value"]];
+        NSString *contentname = [[mediaContents objectAtIndex:i] attributeStringValueForName:@"name"];
+        NSMutableDictionary *tempObjects=[[oldAVDContent objectForKey:contentname] mutableCopy];
+        [contentString appendFormat:@"%@",[tempObjects objectForKey:@"header"]];
+        for(id key in tempObjects) {
+            if ([key caseInsensitiveCompare:@"header"]!=NSOrderedSame)
+            {
+                [contentString appendFormat:@"%@",[tempObjects objectForKey:key]];
+            }
         }
-        
         NSArray *sources = [[[mediaContents objectAtIndex:i] elementForName:@"description"] elementsForName:@"source"];
         NSString *ssrcValue=@"NA";
         NSMutableString *tempContentString = [[NSMutableString alloc]init];
-        //expecting only one source of video/audio per participant
-            for (int i=0; i < 1; i++)
+        if (sources.count>0)
+        {
+        
+            for (int i=0; i < [sources count]; i++)
             {
                 NSXMLElement *source = [sources objectAtIndex:i];
                 ssrcValue = [source attributeStringValueForName:@"ssrc"];
@@ -556,24 +580,13 @@
                          ];
                     }
                 }
-                NSDictionary *ssrcContent=[[NSDictionary alloc]initWithObjectsAndKeys:tempContentString,@"value",ssrcValue,@"name", nil];
-                [tempObjects addObject:ssrcContent];
+                [tempObjects setObject:tempContentString forKey:ssrcValue];
             }
-        
-        [oldAVSDP replaceObjectAtIndex:(i-1) withObject:tempObjects];
+            [oldAVDContent setObject:tempObjects forKey:contentname];
+        }
+
         [SDP appendString:contentString];
 
-    }
-    //issue #7 - Enhancement
-    //Append data content at last
-    if (oldAVSDP.count==3)
-    {
-        NSMutableArray *tempObjects=[[oldAVSDP lastObject] mutableCopy];
-        for (int x=0; x<tempObjects.count; x++)
-        {
-            NSDictionary *tempContent=[tempObjects objectAtIndex:x];
-            [SDP appendFormat:@"%@",[tempContent objectForKey:@"value"]];
-        }
     }
     return SDP;
 }
@@ -589,60 +602,50 @@
     [SDP appendString:@"s=-\r\n"];
     [SDP appendString:@"t=0 0\r\n"];
     
-    // Add groups if it exists
-    NSString * groupStr = [self parseGroups:iq];
-    if (groupStr)
+    //issue #7 - Enhancement
+    if ([oldAVDContent allKeys].count==3)
     {
-        [SDP appendString:groupStr];
+        [SDP appendString:@"a=group:BUNDLE audio video data\r\n"];
+    }
+    else
+    {
+        [SDP appendString:@"a=group:BUNDLE audio video\r\n"];
     }
     
     // Remove media content
     NSArray *mediaContents = [[iq elementForName:@"jingle"] elementsForName:@"content"];
     NSMutableString *contentString = [[NSMutableString alloc]init];
-    for (int i=1; i<[mediaContents count]; i++)
+    for (int i=0; i<[mediaContents count]; i++)
     {
         NSArray *sources = [[[mediaContents objectAtIndex:i] elementForName:@"description"] elementsForName:@"source"];
         NSString *ssrcValue=@"NA";
-        NSMutableArray *tempObjects=[[oldAVSDP objectAtIndex:(i-1)] mutableCopy];
-        NSMutableArray *tempKVos=[[NSMutableArray alloc]init];
-        //expecting only one source of video/audio per participant
-        for (int i=0; i < 1; i++)
+        NSString *contentname = [[mediaContents objectAtIndex:i] attributeStringValueForName:@"name"];
+        NSMutableDictionary *tempObjects=[[oldAVDContent objectForKey:contentname] mutableCopy];
+        if (sources.count>0)
+        {
+        for (int i=0; i < [sources count]; i++)
         {
             NSXMLElement *source = [sources objectAtIndex:i];
             ssrcValue = [source attributeStringValueForName:@"ssrc"];
-            
-            for (int m=0; m<tempObjects.count; m++)
+            if ([tempObjects objectForKey:ssrcValue])
             {
-                NSDictionary *tempContent=[tempObjects objectAtIndex:m];
-                if ([[tempContent objectForKey:@"name"] caseInsensitiveCompare:ssrcValue]!=NSOrderedSame)
-                {
-                    [contentString appendFormat:@"%@",[tempContent objectForKey:@"value"]];
-                    NSDictionary *ssrcContent=[[NSDictionary alloc]initWithObjectsAndKeys:[tempContent objectForKey:@"value"],@"value",[tempContent objectForKey:@"name"],@"name", nil];
-                    [tempKVos addObject:ssrcContent];
-
-                }
-                
+                [tempObjects removeObjectForKey:ssrcValue];
+                break;
             }
   
         }
-        
-        [oldAVSDP replaceObjectAtIndex:(i-1) withObject:tempKVos];
+        }
+        [contentString appendFormat:@"%@",[tempObjects objectForKey:@"header"]];
+        for(id key in tempObjects) {
+            if ([key caseInsensitiveCompare:@"header"]!=NSOrderedSame)
+            {
+                [contentString appendFormat:@"%@",[tempObjects objectForKey:key]];
+            }
+        }
+        [oldAVDContent setObject:tempObjects forKey:contentname];
     
     }
     [SDP appendString:contentString];
-    
-    //issue #7 - Enhancement
-    //Append data content at last
-    if (oldAVSDP.count==3)
-    {
-        NSMutableArray *tempObjects=[[oldAVSDP lastObject] mutableCopy];
-        for (int x=0; x<tempObjects.count; x++)
-        {
-            NSDictionary *tempContent=[tempObjects objectAtIndex:x];
-            [SDP appendFormat:@"%@",[tempContent objectForKey:@"value"]];
-        }
-    }
-
     return SDP;
 
 }
