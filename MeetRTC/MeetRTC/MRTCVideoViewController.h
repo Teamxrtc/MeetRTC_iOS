@@ -49,6 +49,7 @@ typedef enum
 - (IBAction)videoControlButtonClicked:(id)sender;
 - (IBAction)muteButtonClicked:(id)sender;
 - (IBAction)speakerButtonClicked:(id)sender;
+- (IBAction)flipButtonClicked:(id)sender;
 
 
 @property (strong, nonatomic) NSString *roomUrl;
