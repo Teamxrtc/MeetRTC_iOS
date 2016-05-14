@@ -281,8 +281,21 @@
 
 - (void) startLocalDisplay:(RTCVideoTrack *)videoTrack
 {
-    [videoTrack addRenderer:self.remoteView];
-    [participantsTempDetails addObject:videoTrack];
+    //changes for handling camera flip
+    if (participantsTempDetails.count>0)
+    {
+        [participantsTempDetails removeObjectAtIndex:0];
+        [participantsTempDetails insertObject:videoTrack atIndex:0];
+        
+        [self resetViews];
+        [[participantsTempDetails lastObject] addRenderer:self.remoteView];
+    }
+    else
+    {
+        [videoTrack addRenderer:self.remoteView];
+        [participantsTempDetails addObject:videoTrack];
+    }
+   
     [self.myCollectionView reloadData];
 }
 - (void) showStatus:(NSString *)msg
@@ -510,6 +523,26 @@
         [self.speakerButton setBackgroundImage:[UIImage imageNamed:@"speakerOn"] forState:UIControlStateNormal];
         _builtinAudioDevices = true;
     }
+}
+
+- (IBAction)flipButtonClicked:(id)sender {
+    
+    sessionConfigParam.isConfigChange = true;
+    streamConfigParam.isFlipCamera = true;
+    sessionConfigParam.streamConfig = streamConfigParam;
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        if(session != nil)
+        {
+            [session applySessionConfigChanges:sessionConfigParam];
+        }
+        else
+        {
+            [stream applyStreamConfigChange:streamConfigParam];
+        }
+        
+    });
+
 }
 -(void) onAudioSessionRouteChanged:(NSNotification*)notification
 {

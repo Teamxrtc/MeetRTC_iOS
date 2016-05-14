@@ -418,7 +418,9 @@ NSString* const TAG6 = @"WebRTCStream";
     for (RTCMediaStreamTrack *track in lms.videoTracks)
     {
         if (![[track label] compare:@"ARDAMSv0"])  {
-//            [lms removeVideoTrack:track]; v47 changes
+            
+            RTCVideoTrack *newtrack=(RTCVideoTrack *)track;
+            [lms removeVideoTrack:newtrack]; //v47 changes
         }
     }
     
