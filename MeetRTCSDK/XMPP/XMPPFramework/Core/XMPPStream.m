@@ -4830,6 +4830,8 @@ enum XMPPStreamConfig
 	
 	if (sender != parser) return;
 	
+    NSLog(@"xmppParser didFail with error: %@",error);
+    
 	XMPPLogTrace();
 	
 	parserError = error;
