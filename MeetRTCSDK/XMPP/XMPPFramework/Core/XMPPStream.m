@@ -186,12 +186,21 @@ enum XMPPStreamConfig
     dispatch_sync(xmppQueue, ^{
         NSLog(@"XMPP WS RX: %@ \n\n\n", message);
         
-        
-        
+        //Temporary fix for connecting with meet.jit.si till server get fixed
+        NSMutableString *newmessage=[message mutableCopy];
+        if ([message rangeOfString:@"<open id"].location != NSNotFound) {
+            
+            NSArray *iqArray=[newmessage componentsSeparatedByString:@"'"];
+            NSString *newIQId=[iqArray objectAtIndex:1];
+            NSString *newIQDomain=[iqArray objectAtIndex:3];
+            
+            newmessage=[NSMutableString stringWithFormat:@"<?xml version='1.0'?><stream:stream xmlns:stream='http://etherx.jabber.org/streams' version='1.0' from='%@' id='%@' xml:lang='en' xmlns='jabber:client'>",newIQDomain,newIQId];
+        }
+
         // This method is invoked on the xmppQueue.
         
         XMPPLogTrace();
-        NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *data = [newmessage dataUsingEncoding:NSUTF8StringEncoding];
 
         
         lastSendReceiveTime = [NSDate timeIntervalSinceReferenceDate];

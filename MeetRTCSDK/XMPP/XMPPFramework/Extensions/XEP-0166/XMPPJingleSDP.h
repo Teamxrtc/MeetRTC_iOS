@@ -24,6 +24,7 @@
     NSString *gUfrag;
     NSString *gPwd;
     NSMutableDictionary *oldAVDContent;
+    int conferenceFlag;
 }
 - (XMPPIQ *)SDPToXMPP:(NSString *)sdp action:(NSString *)action initiator:(XMPPJID *)initiator target:(XMPPJID *)target UID:(NSString *)UID SID:(NSString *)SID;
 - (XMPPIQ *)CandidateToXMPP:(NSDictionary *)dict action:(NSString *)action initiator:(XMPPJID *)initiator target:(XMPPJID *)target UID:(NSString *)UID SID:(NSString *)SID;
