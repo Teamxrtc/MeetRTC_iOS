@@ -433,6 +433,7 @@
 // Utility to parser SDP from XMPP messages
 - (NSString *)XMPPToSDP:(XMPPIQ *)iq
 {
+    conferenceFlag=0;
     NSMutableString *SDP = [[NSMutableString alloc]init]; // TO be set once ready
     oldAVDContent=[[NSMutableDictionary alloc]init]; // initiate initially
     [oldAVDContent removeAllObjects];
@@ -512,6 +513,7 @@
 }
 - (NSString *)XMPPToSDPNew:(XMPPIQ *)iq
 {
+    conferenceFlag=conferenceFlag+1;
     NSMutableString *SDP = [[NSMutableString alloc]init]; // TO be set once ready
     
     // TBD : To find a way to parse the XMPP data and convert the same to SDP
@@ -580,7 +582,8 @@
                          ];
                     }
                 }
-                [tempObjects setObject:tempContentString forKey:ssrcValue];
+                if ([tempContentString rangeOfString:@"msid"].location != NSNotFound) {
+                    [tempObjects setObject:tempContentString forKey:ssrcValue];}
             }
             [oldAVDContent setObject:tempObjects forKey:contentname];
         }
@@ -592,6 +595,7 @@
 }
 - (NSString *)XMPPToSDPRemove:(XMPPIQ *)iq
 {
+    conferenceFlag=conferenceFlag-1;
     NSMutableString *SDP = [[NSMutableString alloc]init];
     // Parse SDP
     
@@ -636,11 +640,14 @@
         }
         }
         [contentString appendFormat:@"%@",[tempObjects objectForKey:@"header"]];
+        if (conferenceFlag!=0)
+        {
         for(id key in tempObjects) {
             if ([key caseInsensitiveCompare:@"header"]!=NSOrderedSame)
             {
                 [contentString appendFormat:@"%@",[tempObjects objectForKey:key]];
             }
+        }
         }
         [oldAVDContent setObject:tempObjects forKey:contentname];
     
