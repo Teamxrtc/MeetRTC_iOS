@@ -3646,27 +3646,29 @@ enum XMPPStreamConfig
 	// Don't forget about that NSXMLElement bug you reported to apple (xmlns is required or element won't be found)
 	NSXMLElement *f_starttls = [features elementForName:@"starttls" xmlns:@"urn:ietf:params:xml:ns:xmpp-tls"];
 	
-	if (f_starttls)
-	{
-		if ([f_starttls elementForName:@"required"] || [self startTLSPolicy] >= XMPPStreamStartTLSPolicyPreferred)
-		{
-			// TLS is required for this connection
-			
-			// Update state
-			state = STATE_XMPP_STARTTLS_1;
-			
-			// Send the startTLS XML request
-			[self sendStartTLSRequest];
-			
-			// We do not mark the stream as secure yet.
-			// We're waiting to receive the <proceed/> response from the
-			// server before we actually start the TLS handshake.
-			
-			// We're already listening for the response...
-			return;
-		}
-	}
-    else if (![self isSecure] && [self startTLSPolicy] == XMPPStreamStartTLSPolicyRequired)
+    //DTLS is already enabled in peerconnection - hence ignoring
+//	if (f_starttls)
+//	{
+//		if ([f_starttls elementForName:@"required"] || [self startTLSPolicy] >= XMPPStreamStartTLSPolicyPreferred)
+//		{
+//			// TLS is required for this connection
+//			
+//			// Update state
+//			state = STATE_XMPP_STARTTLS_1;
+//			
+//			// Send the startTLS XML request
+//			[self sendStartTLSRequest];
+//			
+//			// We do not mark the stream as secure yet.
+//			// We're waiting to receive the <proceed/> response from the
+//			// server before we actually start the TLS handshake.
+//			
+//			// We're already listening for the response...
+//			return;
+//		}
+//	}
+//    else
+    if (![self isSecure] && [self startTLSPolicy] == XMPPStreamStartTLSPolicyRequired)
     {
 		// We must abort the connection as the server doesn't support our requirements.
 		
